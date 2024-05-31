@@ -4,6 +4,7 @@ import BadRequestException from "../../exceptions/BadRequestException";
 import { User } from "../../entity/user.entity";
 import { connect } from "../../config/redisConnection";
 import NotFoundException from "../../exceptions/NotFoundException";
+import UserData from "../../types/user.type";
 
 export const index = async (req: any, res: Response, next: NextFunction) => {
     try {
@@ -39,12 +40,14 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
         await user.save();
 
-        (await connect()).set(user.id, JSON.stringify({
+        const userData: UserData = {
             userName: user.userName,
-            accountNumber: user.accountNumber,
             emailAddress: user.emailAddress,
+            accountNumber: user.accountNumber,
             identityNumber: user.identityNumber
-        }));
+        };
+
+        (await connect()).set(user.id, JSON.stringify(userData));
 
         await SuccessResponse(
             req, 
@@ -95,15 +98,17 @@ export const getUserByAccountNumber = async (req: any, res: Response, next: Next
             throw new NotFoundException("User not found");
         }
 
+        const userData: UserData = {
+            userName: user.userName,
+            emailAddress: user.emailAddress,
+            accountNumber: user.accountNumber,
+            identityNumber: user.identityNumber
+        };
+
         await SuccessResponse(
             req, 
             res, 
-            {
-                userName: user.userName,
-                emailAddress: user.emailAddress,
-                accountNumber: user.accountNumber,
-                identityNumber: user.identityNumber
-            },
+            userData,
             200
         );
     } catch (err) {
@@ -118,15 +123,17 @@ export const getUserByIdentityNumber = async (req: any, res: Response, next: Nex
             throw new NotFoundException("User not found");
         }
 
+        const userData: UserData = {
+            userName: user.userName,
+            emailAddress: user.emailAddress,
+            accountNumber: user.accountNumber,
+            identityNumber: user.identityNumber
+        };
+
         await SuccessResponse(
             req, 
             res, 
-            {
-                userName: user.userName,
-                emailAddress: user.emailAddress,
-                accountNumber: user.accountNumber,
-                identityNumber: user.identityNumber
-            },
+            userData,
             200
         );
     } catch (err) {

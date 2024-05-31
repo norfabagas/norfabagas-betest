@@ -29,12 +29,14 @@ export const verifyToken = async(req: Request, res: Response, next: NextFunction
             } else {
                 const user = await User.findOne({ _id: id }).exec();
                 if (user) {
-                    req.body['user'] = {
+                    const userData: UserData = {
                         userName: user.userName,
                         accountNumber: user.accountNumber,
                         emailAddress: user.emailAddress,
                         identityNumber: user.identityNumber
                     };
+
+                    req.body['user'] = userData;
                     (await connect()).set(id, JSON.stringify(req.body['user']));
                 } else {
                     throw new BadRequestException("Token invalid");
