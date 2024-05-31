@@ -13,16 +13,16 @@ services:
       - redis
       - mongo
     environment:
-      - MONGO_URL=mongodb://mongo:27017/mydatabase
+      - MONGO_URL=mongodb://mongo:27017/norfabagas-betest
       - REDIS_URL=redis://redis:6379
 
   redis:
-    image: redis:latest
+    image: redis:6.2-alpine
     ports:
       - "6379:6379"
 
   mongo:
-    image: mongo:latest
+    image: mongo:8.0.0-rc5-jammy
     ports:
       - "27017:27017"
     volumes:

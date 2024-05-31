@@ -3,6 +3,7 @@ BE test (create microservice for user authentication)
 
 ## Getting started
 To run this repository, make sure you have npm & node installed (tested with node version 20.10.0 and npm version 10.7.0)
+
 ### Steps to run in local
 - Create database (postgresql) in local environment
 - Clone this repository
@@ -14,3 +15,6 @@ To run this repository, make sure you have npm & node installed (tested with nod
 
 ### Build 
 - Use `npm run build` to compile, and `npm run start` to run the compiled code (in dist/ folder)
+
+### Docker build
+- `docker-compose up --build`
