@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  node-app:
+    build: .
+    command: node dist/index.js
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/mydatabase
+      - REDIS_URL=redis://redis:6379
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
